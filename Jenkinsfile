@@ -21,7 +21,7 @@ pipeline {
                     docker rm -f mock-app || true
                     docker run -d \
                         --name mock-app \
-                        -p 8082:8080 \
+                        -p 8082:8082 \
                         mock-app:latest
                 '''
             }
