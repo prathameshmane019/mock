@@ -3,6 +3,27 @@ pipeline {
 
     stages {
 
+        stage('Environment Check') {
+            steps {
+                sh '''
+                    echo "===== JAVA ====="
+                    which java
+                    java -version
+
+                    echo "===== JAVAC ====="
+                    which javac
+                    javac -version
+
+                    echo "===== MAVEN ====="
+                    which mvn
+                    mvn -version
+
+                    echo "===== JAVA_HOME ====="
+                    echo $JAVA_HOME
+                '''
+            }
+        }
+
         stage('Checkout') {
             steps {
                 checkout scm
@@ -12,11 +33,6 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'mvn clean test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
             }
         }
 
